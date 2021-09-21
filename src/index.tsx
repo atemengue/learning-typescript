@@ -1,13 +1,14 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const App = () =>  {
+  return (
+    <h1>Hi there!!</h1>
+  )
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+ <App />,
   document.getElementById('root')
 );
 

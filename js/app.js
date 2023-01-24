@@ -1,38 +1,45 @@
-function startGame() {
-    let playName = getInputValue('playername');
-    logPlayer(playName);
-    postScore(80, playName);
-}
-function logPlayer(name = 'MultiMath Player') {
-    console.log(`New game starting for player: ${name}`);
-}
-function getInputValue(elementID) {
-    const inputElement = (document.getElementById(elementID));
-    console.log(inputElement);
-    if (inputElement.value === '') {
-        return undefined;
+class Player {
+    formatName() {
+        return this.name.toUpperCase();
     }
-    else {
+}
+class Utility {
+    static getInputValue(elementID) {
+        const inputElement = (document.getElementById(elementID));
         return inputElement.value;
     }
 }
-function postScore(score, playName = 'MultiMath Player') {
-    let logger;
-    if (score < 0) {
-        logger = logError;
+class Scoreboard {
+    constructor() {
+        this.results = [];
     }
-    else {
-        logger = logMessage;
+    addResult(newResult) {
+        this.results.push(newResult);
     }
-    const scoreElement = document.getElementById('postedScores');
-    scoreElement.innerHTML = `${score} - ${playName}`;
-    logger(`Score ${score}`);
+    updateScoreboard() {
+    }
 }
-const scores = [10, 20, 45, 89, 30, 69];
-let highscores = scores.filter((value) => value >= 50);
-console.log(highscores);
-document.getElementById('startGame').addEventListener('click', startGame);
-const logMessage = (message) => console.log(message);
-function logError(err) {
-    console.log(err);
+class Game {
+    constructor(newPlayer, numOfProblems, multFactor) {
+        this.scoreboard = new Scoreboard();
+        this.player = newPlayer;
+        this.problemCount = numOfProblems;
+        this.factor = multFactor;
+    }
+    displayGame() {
+    }
+    calculateScore() {
+    }
 }
+let newGame;
+document.getElementById('startGame').addEventListener('click', () => {
+    const player = new Player();
+    player.name = Utility.getInputValue('playname');
+    const problemCount = Number(Utility.getInputValue('problemCount'));
+    const factor = Number(Utility.getInputValue('factor'));
+    newGame = new Game(player, problemCount, factor);
+    newGame.displayGame();
+    document.getElementById('calculate').addEventListener('click', () => {
+        newGame.calculateScore();
+    });
+});

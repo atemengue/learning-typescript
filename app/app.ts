@@ -26,8 +26,31 @@ function getInputValue(elementID: string): string | undefined {
 }
 
 function postScore(score: number, playName: string = 'MultiMath Player'): void {
+  let logger: (value: string) => void;
+
+  if (score < 0) {
+    logger = logError;
+  } else {
+    logger = logMessage;
+  }
+
   const scoreElement: HTMLElement | null =
     document.getElementById('postedScores');
   scoreElement!.innerHTML = `${score} - ${playName}`;
+
+  logger(`Score ${score}`);
 }
+
+const scores: number[] = [10, 20, 45, 89, 30, 69];
+
+let highscores: number[] = scores.filter((value) => value >= 50);
+
+console.log(highscores);
+
 document.getElementById('startGame')!.addEventListener('click', startGame);
+
+const logMessage = (message: string) => console.log(message);
+
+function logError(err: string): void {
+  console.log(err);
+}

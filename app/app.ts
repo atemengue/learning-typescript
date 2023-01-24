@@ -1,72 +1,24 @@
 /** @format */
+/// <reference path="player.ts" />
+/// <reference path="game.ts" />
 
-function startGame() {
-  // start a new game init
+// refactoring app main
+let newGame: Game;
 
-  let playName: string | undefined = getInputValue('playername');
-  logPlayer(playName);
+// add click handler to the start game button
 
-  postScore(80, playName);
-}
+document.getElementById('startGame')!.addEventListener('click', () => {
+  const player: Player = new Player();
+  player.name = Utility.getInputValue('playname');
 
-function logPlayer(name: string = 'MultiMath Player'): void {
-  console.log(`New game starting for player: ${name}`);
-}
+  const problemCount: number = Number(Utility.getInputValue('problemCount'));
+  const factor: number = Number(Utility.getInputValue('factor'));
 
-function getInputValue(elementID: string): string | undefined {
-  const inputElement: HTMLInputElement = <HTMLInputElement>(
-    document.getElementById(elementID)
-  );
-  console.log(inputElement);
-  if (inputElement.value === '') {
-    return undefined;
-  } else {
-    return inputElement.value;
-  }
-}
+  newGame = new Game(player, problemCount, factor);
+  newGame.displayGame();
 
-function postScore(score: number, playName: string = 'MultiMath Player'): void {
-  let logger: (value: string) => void;
-
-  if (score < 0) {
-    logger = logError;
-  } else {
-    logger = logMessage;
-  }
-
-  const scoreElement: HTMLElement | null =
-    document.getElementById('postedScores');
-  scoreElement!.innerHTML = `${score} - ${playName}`;
-
-  logger(`Score ${score}`);
-}
-
-const scores: number[] = [10, 20, 45, 89, 30, 69];
-
-let highscores: number[] = scores.filter((value) => value >= 50);
-
-console.log(highscores);
-
-document.getElementById('startGame')!.addEventListener('click', startGame);
-
-const logMessage = (message: string) => console.log(message);
-
-function logError(err: string): void {
-  console.log(err);
-}
-
-let myResult: Result = {
-  playerName: 'Regis',
-  score: 5,
-  problemCount: 5,
-  factor: 7,
-};
-
-let player: Person = {
-  name: 'Daniel',
-  formatName: () => 'Daniel',
-};
-
-const firstPlayer: Player = new Player();
-firstPlayer.name = 'Regis';
-console.log(firstPlayer);
+  // add click handler to the calculate score button
+  document.getElementById('calculate')!.addEventListener('click', () => {
+    newGame.calculateScore();
+  });
+});

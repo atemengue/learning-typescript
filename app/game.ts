@@ -1,12 +1,10 @@
 /** @format */
 
-/// <reference path="utility.ts" />
-/// <reference path="result.ts" />
-/// <reference path="player.ts" />
-/// <reference path="scoreboard.ts" />
+import { Player } from './player';
+import { Scoreboard as ResultPanel } from './scoreboard';
 
-class Game {
-  private scoreboard: Scoreboard = new Scoreboard();
+export class Game {
+  private scoreboard: ResultPanel = new ResultPanel();
   player: Player;
   problemCount: number;
   factor: number;
